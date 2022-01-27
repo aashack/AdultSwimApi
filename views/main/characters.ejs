@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript"> 
+        function openURL() {
+
+            var name = document.getElementById('name').value;
+            var status = document.getElementById('status').value;
+            var url = '<%= url %>/v1/characters/view?page=<%= current %>';
+            if(name !== '') {
+               url = url + '&name=' + encodeURIComponent(name);
+            }
+            if(status !== '') {
+                url = url + '&status=' + encodeURIComponent(status);
+            }
+            
+            console.log(url)
+            // In current window
+            window.location.href = url;
+
+            // In new window
+           // window.open(url);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3>Rick and Morty Database</h3>
+    </div>
+    <hr>
+    <div class="container">
+        <h3>Filter</h3>
+        <p>Name: <input type="text" id="name"> </p>
+        <p>Status: <input type="text" id="status"> </p>
+        <p><input type="button" onclick="openURL()" value="Go"/></p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% if (characters.length === 0) { %>
+                <div>No more pages!</div>
+            <% } else { %>
+            <% for (var i = 0; i < characters.length; i++) { %>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <a href="<%= url %>/v1/characters/view/<%= characters[i].id %>"><img src="<%= characters[i].image %>"></a>
+                        <div class="caption">
+                            <h4>ID: <%= characters[i].id %></h4>
+                            <p>NAME: <%= characters[i].name %></p>
+                            <p>STATUS: <%= characters[i].status %></p>
+                            <p>SPECIES: <%= characters[i].species %></p>
+                            <p>GENDER: <%= characters[i].gender %></p>
+                            <p>ORIGIN: <%= characters[i].origin.name %></p>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            <% } %>
+
+        </div>
+            <% if (pages > 0) { %>
+                <ul class="pagination text-center">
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>First</a></li>
+                    <% } else { %>
+                        <li><a href="<%= url %>/v1/characters/view?page=1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="active"><a><%= i %></a></li>
+                        <% } else { %>
+                            <li><a href="<%= url %>/v1/characters/view?page=<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="disabled"><a>...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="disabled"><a>Last</a></li>
+                    <% } else { %>
+                        <li><a href="<%= url %>/v1/characters/view?page=<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            <% } %>
+        </div>
+        <div class="container">
+            <% if (characters.length !== 0) { %>
+       
+            <p><a href="<%= url %>/v1/characters/excel?page=<%= current %>">Download Current Page to XLS</a></p>
+            <% } %>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>Rick and Morty API Take Home Project</p>
+        </div>
+    </body>
+</html>

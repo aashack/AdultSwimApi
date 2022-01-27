@@ -1,0 +1,8 @@
+{
+  "service": {
+    "name": "Adult Swim (PROD})",
+    "url": "http://localhost",
+    "port": 3033
+
+  }
+}
