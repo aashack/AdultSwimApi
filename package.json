@@ -1,5 +1,5 @@
 {
-  "name": "adultswimapi",
+  "name": "AdultSwimApi",
   "version": "1.0.0",
   "description": "Rick and Morty Themed Character API",
   "main": "index.js",
