@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  adultswimapi:
+    image: adultswimapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3033:3033
