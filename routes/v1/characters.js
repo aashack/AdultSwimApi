@@ -19,5 +19,4 @@ characterRouter.parentNode.get("/excel/", charactersController.downloadExcelShee
 characterRouter.parentNode.get("/:characterId", charactersController.getCharacterById);
 
 
-
 export default characterRouter;
